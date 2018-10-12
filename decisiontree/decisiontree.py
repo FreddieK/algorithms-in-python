@@ -11,6 +11,7 @@ class DecisionTree:
     def __init__(self, max_depth=3, min_samples=5):
         self.max_depth = max_depth
         self.min_samples = min_samples
+        self._tree = {}
 
     @staticmethod
     def find_split(set_):
@@ -54,11 +55,17 @@ class DecisionTree:
         self.iterate(split['right'], node['right'], depth+1)
         return node
 
-    def predict(self, node, row):
+    def build_tree(self, set_):
+        self._tree = self.iterate(set_)
+
+    def predict(self, row, node=None):
+        if node is None:
+            node = self._tree
+
         if 'value' in node:
             return node['value']
 
         if row < node['split_point']:
-            return self.predict(node['left'], row)
+            return self.predict(row, node['left'])
         else:
-            return self.predict(node['right'], row)
+            return self.predict(row, node['right'])
