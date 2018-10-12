@@ -1,12 +1,7 @@
-import pandas as pd
 import numpy as np
 
 
 class DecisionTree:
-    # Next Steps
-    # - Implement support for handling multiple features (including categorical)
-    # - Support taking DF for predictions, to properly assess performance
-    # - Write GBM that can use the trees to make more powerful predictions
 
     def __init__(self, max_depth=3, min_samples=5):
         self.max_depth = max_depth
@@ -15,26 +10,26 @@ class DecisionTree:
 
     @staticmethod
     def _find_split(set_):
-        best_SSE = None
+        best_sse = None
         best_split = None
         for index, row in set_.iterrows():
-            SSE = 0
+            sse = 0
             branches = [set_[set_['x'] < row['x']],
                         set_[~(set_['x'] < row['x'])]]
             for branch in branches:
                 y_pred = branch['y'].mean()
-                SSE += np.sum((y_pred - branch['y'])**2)
-            if (best_SSE is None) or (SSE < best_SSE):
-                best_SSE = SSE
+                sse += np.sum((y_pred - branch['y'])**2)
+            if (best_sse is None) or (sse < best_sse):
+                best_sse = sse
                 best_split = {
-                    'SSE': SSE,
+                    'SSE': sse,
                     'split_point': row['x'],
                     'left': branches[0],
                     'right': branches[1]
                 }
         return best_split
 
-    def _iterate(self, set_, node={}, depth=1):
+    def _iterate(self, set_, node, depth=1):
         if depth >= self.max_depth:
             # Return value
             node['value'] = set_['y'].mean()
@@ -56,7 +51,7 @@ class DecisionTree:
         return node
 
     def build_tree(self, set_):
-        self._tree = self._iterate(set_)
+        self._tree = self._iterate(set_, {})
 
     def predict(self, row, node=None):
         if node is None:

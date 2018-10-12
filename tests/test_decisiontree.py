@@ -5,6 +5,11 @@ from sklearn.datasets import load_iris
 
 
 class TestDecisionTree(unittest.TestCase):
+    # Next Steps
+    # - Implement support for handling multiple features (including categorical)
+    # - Support taking DF for predictions, to properly assess performance
+    # - Write GBM that can use the trees to make more powerful predictions
+
     def setUp(self):
         iris = load_iris()
         self.df = pd.DataFrame(iris.data, columns=iris.feature_names)
@@ -21,3 +26,7 @@ class TestDecisionTree(unittest.TestCase):
         result = tree.predict(5)
 
         self.assertEqual(result, 3.090625)
+
+    @unittest.skip
+    def test_can_use_multiple_features(self):
+        self.fail()
