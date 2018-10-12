@@ -45,7 +45,6 @@ class DecisionTree:
 
         node['left'] = {'depth': depth}
         self._iterate(split['left'], node['left'], depth + 1)
-
         node['right'] = {'depth': depth}
         self._iterate(split['right'], node['right'], depth + 1)
         return node
