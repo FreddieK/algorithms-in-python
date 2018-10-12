@@ -16,6 +16,7 @@ class TestDecisionTree(unittest.TestCase):
         tree = DecisionTree()
         self.assertTrue(type(tree) is DecisionTree)
 
+    @unittest.skip
     def test_prediction(self):
         set_ = pd.DataFrame(data={'x': self.df['sepal length (cm)'],
                                   'y': self.df['sepal width (cm)']})
@@ -25,7 +26,6 @@ class TestDecisionTree(unittest.TestCase):
 
         self.assertEqual(result, 3.090625)
 
-    @unittest.skip
     def test_can_build_tree_using_multiple_continuous_features(self):
         y = pd.DataFrame(self.df['sepal width (cm)'])
         x = pd.DataFrame(self.df.drop('sepal width (cm)', axis=1))
