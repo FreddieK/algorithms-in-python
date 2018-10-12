@@ -14,7 +14,7 @@ class DecisionTree:
         self._tree = {}
 
     @staticmethod
-    def find_split(set_):
+    def _find_split(set_):
         best_SSE = None
         best_split = None
         for index, row in set_.iterrows():
@@ -34,7 +34,7 @@ class DecisionTree:
                 }
         return best_split
 
-    def iterate(self, set_, node={}, depth=1):
+    def _iterate(self, set_, node={}, depth=1):
         if depth >= self.max_depth:
             # Return value
             node['value'] = set_['y'].mean()
@@ -44,19 +44,19 @@ class DecisionTree:
             return
 
         # Calculate best split and get groups
-        split = self.find_split(set_)
+        split = self._find_split(set_)
         node['split_point'] = split['split_point']
         node['split_SSE'] = split['SSE']
 
         node['left'] = {'depth': depth}
-        self.iterate(split['left'], node['left'], depth+1)
+        self._iterate(split['left'], node['left'], depth + 1)
 
         node['right'] = {'depth': depth}
-        self.iterate(split['right'], node['right'], depth+1)
+        self._iterate(split['right'], node['right'], depth + 1)
         return node
 
     def build_tree(self, set_):
-        self._tree = self.iterate(set_)
+        self._tree = self._iterate(set_)
 
     def predict(self, row, node=None):
         if node is None:

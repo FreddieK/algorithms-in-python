@@ -9,7 +9,6 @@ class TestDecisionTree(unittest.TestCase):
         iris = load_iris()
         self.df = pd.DataFrame(iris.data, columns=iris.feature_names)
 
-
     def test_can_import(self):
         tree = DecisionTree()
         self.assertTrue(type(tree) is DecisionTree)
