@@ -9,48 +9,60 @@ class DecisionTree:
         self._tree = {}
 
     @staticmethod
-    def _find_split(set_):
+    def _find_split(feature, x, y):
         best_sse = None
         best_split = None
-        for index, row in set_.iterrows():
-            sse = 0
-            branches = [set_[set_['x'] < row['x']],
-                        set_[~(set_['x'] < row['x'])]]
-            for branch in branches:
-                y_pred = branch['y'].mean()
-                sse += np.sum((y_pred - branch['y'])**2)
-            if (best_sse is None) or (sse < best_sse):
-                best_sse = sse
+        for value in feature:
+            left_y = y[feature < value]
+            right_y = y[~(feature < value)]
+
+            sse = np.sum((left_y.mean() - left_y)**2) + \
+                   np.sum((right_y.mean() - right_y)**2)
+
+            if (best_sse is None) or (sse[0] < best_sse):
+                best_sse = sse[0]
+                left_x = x[feature < value]
+                right_x = x[~(feature < value)]
                 best_split = {
-                    'SSE': sse,
-                    'split_point': row['x'],
-                    'left': branches[0],
-                    'right': branches[1]
+                    'feature': feature.name,
+                    'SSE': best_sse,
+                    'split_point': value,
+                    'left_x': left_x,
+                    'left_y': left_y,
+                    'right_x': right_x,
+                    'right_y': right_y,
                 }
         return best_split
 
-    def _iterate(self, set_, node, depth=1):
+    def _iterate(self, x, y, node, depth=1):
         if depth >= self.max_depth:
-            # Return value
-            node['value'] = set_['y'].mean()
+            node['value'] = y.mean()[0]
             return
-        if len(set_) <= self.min_samples:
-            node['value'] = set_['y'].mean()
+        if len(x) <= self.min_samples:
+            node['value'] = y.mean()[0]
             return
 
-        # Calculate best split and get groups
-        split = self._find_split(set_)
+        best_split = None
+        for feature in x:
+            potential_split = self._find_split(x[feature], x, y)
+            if (best_split is None) or \
+                (potential_split['SSE'] < best_split['SSE']):
+                best_split = potential_split
+        split = best_split
+
+        node['feature'] = split['feature']
         node['split_point'] = split['split_point']
         node['split_SSE'] = split['SSE']
 
-        node['left'] = {'depth': depth}
-        self._iterate(split['left'], node['left'], depth + 1)
-        node['right'] = {'depth': depth}
-        self._iterate(split['right'], node['right'], depth + 1)
+        node['depth'] = depth
+        node['left'] = {}
+        node['right'] = {}
+        self._iterate(split['left_x'], split['left_y'], node['left'], depth + 1)
+        self._iterate(split['right_x'], split['right_y'], node['right'], depth + 1)
         return node
 
-    def build_tree(self, set_):
-        self._tree = self._iterate(set_, {})
+    def build_tree(self, x, y):
+        self._tree = self._iterate(x, y, {})
 
     def predict(self, row, node=None):
         if node is None:
@@ -59,7 +71,8 @@ class DecisionTree:
         if 'value' in node:
             return node['value']
 
-        if row < node['split_point']:
+        feature = node['feature']
+        if row[feature] < node['split_point']:
             return self.predict(row, node['left'])
         else:
             return self.predict(row, node['right'])
