@@ -16,13 +16,14 @@ class TestDecisionTree(unittest.TestCase):
         tree = DecisionTree()
         self.assertTrue(type(tree) is DecisionTree)
 
-    @unittest.skip
     def test_prediction(self):
-        set_ = pd.DataFrame(data={'x': self.df['sepal length (cm)'],
-                                  'y': self.df['sepal width (cm)']})
+        y = pd.DataFrame(self.df['sepal width (cm)'])
+        x = pd.DataFrame(self.df.drop('sepal width (cm)', axis=1))
+
         tree = DecisionTree()
-        tree.build_tree(set_)
-        result = tree.predict(5)
+        tree.build_tree(x, y)
+
+        result = tree.predict_v2(5)
 
         self.assertEqual(result, 3.090625)
 
