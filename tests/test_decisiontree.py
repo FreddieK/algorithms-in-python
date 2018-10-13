@@ -16,16 +16,16 @@ class TestDecisionTree(unittest.TestCase):
         tree = DecisionTree()
         self.assertTrue(type(tree) is DecisionTree)
 
-    def test_prediction(self):
+    def test_prediction_using_one_feature(self):
         y = pd.DataFrame(self.df['sepal width (cm)'])
-        x = pd.DataFrame(self.df.drop('sepal width (cm)', axis=1))
-
+        x = pd.DataFrame(self.df['sepal length (cm)'])
         tree = DecisionTree()
         tree.build_tree(x, y)
 
-        result = tree.predict(5)
+        row = x.iloc[0]
+        result = tree.predict(row)
 
-        self.assertEqual(result, 3.090625)
+        self.assertEqual(result, 3.5)
 
     def test_can_build_tree_using_multiple_continuous_features(self):
         y = pd.DataFrame(self.df['sepal width (cm)'])
@@ -37,8 +37,23 @@ class TestDecisionTree(unittest.TestCase):
         self.assertTrue(type(tree._tree) is dict)
         self.assertIn('depth', tree._tree)
 
+    def test_prediction_using_multiple_features(self):
+        y = pd.DataFrame(self.df['sepal width (cm)'])
+        x = pd.DataFrame(self.df.drop('sepal width (cm)', axis=1))
+        tree = DecisionTree(5, 5)
+        tree.build_tree(x, y)
+
+        # true value = 3.5
+        row = x.iloc[0]
+        result = tree.predict(row)
+        self.assertEqual(result, 3.60625)
+
     @unittest.skip
     def test_can_predict_for_df(self):
+        self.fail()
+
+    @unittest.skip
+    def test_can_validate_result(self):
         self.fail()
 
     @unittest.skip

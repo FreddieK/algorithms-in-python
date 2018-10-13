@@ -19,12 +19,13 @@ class DecisionTree:
             sse = np.sum((left_y.mean() - left_y)**2) + \
                    np.sum((right_y.mean() - right_y)**2)
 
-            if (best_sse is None) or (sse[0] < best_sse[0]):
-                best_sse = sse
+            if (best_sse is None) or (sse[0] < best_sse):
+                best_sse = sse[0]
                 left_x = x[feature < value]
                 right_x = x[~(feature < value)]
                 best_split = {
-                    'SSE': sse,
+                    'feature': feature.name,
+                    'SSE': best_sse,
                     'split_point': value,
                     'left_x': left_x,
                     'left_y': left_y,
@@ -41,17 +42,19 @@ class DecisionTree:
             node['value'] = y.mean()[0]
             return
 
-        features = list()
+        best_split = None
         for feature in x:
-            features.append(self._find_split(x[feature], x, y))
+            potential_split = self._find_split(x[feature], x, y)
+            if (best_split is None) or \
+                (potential_split['SSE'] < best_split['SSE']):
+                best_split = potential_split
+        split = best_split
 
-        # best feature chosen as split, for now fake it...
-        split = features[0]
-
+        node['feature'] = split['feature']
         node['split_point'] = split['split_point']
         node['split_SSE'] = split['SSE']
-        node['depth'] = depth
 
+        node['depth'] = depth
         node['left'] = {}
         node['right'] = {}
         self._iterate(split['left_x'], split['left_y'], node['left'], depth + 1)
@@ -68,7 +71,8 @@ class DecisionTree:
         if 'value' in node:
             return node['value']
 
-        if row < node['split_point']:
+        feature = node['feature']
+        if row[feature] < node['split_point']:
             return self.predict(row, node['left'])
         else:
             return self.predict(row, node['right'])
