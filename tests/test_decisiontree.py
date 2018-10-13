@@ -23,7 +23,7 @@ class TestDecisionTree(unittest.TestCase):
         tree = DecisionTree()
         tree.build_tree(x, y)
 
-        result = tree.predict_v2(5)
+        result = tree.predict(5)
 
         self.assertEqual(result, 3.090625)
 

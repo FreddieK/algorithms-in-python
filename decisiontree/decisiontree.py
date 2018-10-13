@@ -9,7 +9,7 @@ class DecisionTree:
         self._tree = {}
 
     @staticmethod
-    def _find_split_v2(feature, x, y):
+    def _find_split(feature, x, y):
         best_sse = None
         best_split = None
         for value in feature:
@@ -43,7 +43,7 @@ class DecisionTree:
 
         features = list()
         for feature in x:
-            features.append(self._find_split_v2(x[feature], x, y))
+            features.append(self._find_split(x[feature], x, y))
 
         # best feature chosen as split, for now fake it...
         split = features[0]
