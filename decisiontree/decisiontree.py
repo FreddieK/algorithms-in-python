@@ -17,12 +17,16 @@ class DecisionTree:
 
     @staticmethod
     def _find_split_categorical(feature, x, y):
-        # feature = column to find optimal split for
-        # x = complete X matrix
-        # y = target variable
-
-        # unique values for feature
+        # Thinking: this should be a preprocessing step, and then the encoded
+        # categorical features should just be compared as usual
+        #
+        # for value in feature: => unique value...
+        #
+        # The question becomes how to encode the variables. Probably:
         # unique permutations of feature
+        #
+        # https://medium.com/data-design/visiting-categorical-features-and-encoding-in-decision-trees-53400fa65931
+        #
         # for each permutation, calculate sse and choose best
         # 'split point' will have array of values in left node (?)
         # When predicting, checking for type array and then 'in' check
