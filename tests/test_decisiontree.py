@@ -8,10 +8,6 @@ class TestDecisionTree(unittest.TestCase):
     # Next Steps
     # - don't keep y as dataframe (or find efficient conversion)
     # - Write GBM that can use the trees to make more powerful predictions
-    # - Root should be lvl 0, not one, comparing to sklearn
-    #
-    # - Note: SKlearn uses <= as splitting criteria, which means split point is
-    # the clostest smaller value...
 
     @classmethod
     def setUpClass(self):
@@ -61,4 +57,12 @@ class TestDecisionTree(unittest.TestCase):
 
     @unittest.skip
     def test_can_use_categorical_features(self):
+        self.fail()
+
+    @unittest.skip
+    def test_equal_result_to_sklearn_regressiontree(self):
+        # Manually verified for Boston data set, though
+        # - Root should be lvl 0, not one, comparing to sklearn
+        # - SKlearn uses <= as splitting criteria, which means split point is
+        # the clostest smaller value to the one used by me
         self.fail()
