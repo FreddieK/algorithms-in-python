@@ -30,7 +30,6 @@ class TestDecisionTree(unittest.TestCase):
     def test_can_build_tree_using_multiple_continuous_features(self):
         y = pd.DataFrame(self.df['sepal width (cm)'])
         x = pd.DataFrame(self.df.drop('sepal width (cm)', axis=1))
-
         tree = DecisionTree()
         tree.build_tree(x, y)
 
@@ -43,14 +42,19 @@ class TestDecisionTree(unittest.TestCase):
         tree = DecisionTree(5, 5)
         tree.build_tree(x, y)
 
-        # true value = 3.5
         row = x.iloc[0]
         result = tree.predict(row)
         self.assertEqual(result, 3.60625)
 
-    @unittest.skip
     def test_can_predict_for_df(self):
-        self.fail()
+        y = pd.DataFrame(self.df['sepal width (cm)'])
+        x = pd.DataFrame(self.df.drop('sepal width (cm)', axis=1))
+        tree = DecisionTree(5, 5)
+        tree.build_tree(x, y)
+
+        rows = x.iloc[0:10]
+        result = tree.predict(rows)
+        self.assertTrue(len(result) == 10)
 
     @unittest.skip
     def test_can_validate_result(self):
