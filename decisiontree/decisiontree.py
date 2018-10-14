@@ -1,11 +1,18 @@
 import numpy as np
-
+import pandas as pd
 
 class DecisionTree:
     def __init__(self, max_depth=3, min_samples=5):
         self.max_depth = max_depth
         self.min_samples = min_samples
         self._tree = {}
+
+    @staticmethod
+    def score(y, y_pred, metric='MAE'):
+        # Only supports MAE for now
+
+        if metric == 'MAE':
+            return np.sum(abs(y - y_pred))/len(y)
 
     @staticmethod
     def _find_split(feature, x, y):
@@ -37,7 +44,7 @@ class DecisionTree:
         if len(x) <= self.min_samples:
             node['value'] = y.mean()[0]
             return
-        
+
         best_split = None
         for feature in x:
             potential_split = self._find_split(x[feature], x, y)
@@ -52,20 +59,28 @@ class DecisionTree:
         node['left'] = {}
         node['right'] = {}
 
-        self._iterate(best_split['left_x'], best_split['left_y'], node['left'], depth + 1)
-        self._iterate(best_split['right_x'], best_split['right_y'], node['right'], depth + 1)
+        self._iterate(best_split['left_x'], best_split['left_y'],
+                      node['left'], depth + 1)
+        self._iterate(best_split['right_x'], best_split['right_y'],
+                      node['right'], depth + 1)
         return node
 
     def build_tree(self, x, y):
         self._tree = self._iterate(x, y, {})
 
-    def predict(self, row, node=None):
-        if node is None:
-            node = self._tree
+    def _predict(self, row, node):
         if 'value' in node:
             return node['value']
         feature = node['feature']
         if row[feature] < node['split_point']:
-            return self.predict(row, node['left'])
+            return self._predict(row, node['left'])
         else:
-            return self.predict(row, node['right'])
+            return self._predict(row, node['right'])
+
+    def predict(self, rows):
+        y = list()
+        if type(rows) == pd.core.series.Series:
+            return self._predict(rows, self._tree)
+        for index, row in rows.iterrows():
+            y.append(self._predict(row, self._tree))
+        return y
