@@ -8,6 +8,13 @@ class DecisionTree:
         self._tree = {}
 
     @staticmethod
+    def score(y, y_pred, metric='MAE'):
+        # Only supports MAE for now
+
+        if metric == 'MAE':
+            return np.sum(abs(y - y_pred))/len(y)
+
+    @staticmethod
     def _find_split(feature, x, y):
         best_sse = None
         best_split = None
@@ -52,8 +59,10 @@ class DecisionTree:
         node['left'] = {}
         node['right'] = {}
 
-        self._iterate(best_split['left_x'], best_split['left_y'], node['left'], depth + 1)
-        self._iterate(best_split['right_x'], best_split['right_y'], node['right'], depth + 1)
+        self._iterate(best_split['left_x'], best_split['left_y'],
+                      node['left'], depth + 1)
+        self._iterate(best_split['right_x'], best_split['right_y'],
+                      node['right'], depth + 1)
         return node
 
     def build_tree(self, x, y):
