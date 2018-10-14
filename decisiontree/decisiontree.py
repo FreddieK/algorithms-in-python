@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+
 class DecisionTree:
     def __init__(self, max_depth=3, min_samples=5):
         self.max_depth = max_depth
@@ -13,6 +14,39 @@ class DecisionTree:
 
         if metric == 'MAE':
             return np.sum(abs(y - y_pred))/len(y)
+
+    @staticmethod
+    def _find_split_categorical(feature, x, y):
+        # feature = column to find optimal split for
+        # x = complete X matrix
+        # y = target variable
+
+        # unique values for feature
+        # unique permutations of feature
+        # for each permutation, calculate sse and choose best
+        # 'split point' will have array of values in left node (?)
+        # When predicting, checking for type array and then 'in' check
+
+        best_sse = None
+        best_split = None
+        for value in feature:
+            left_y = y[feature < value]
+            right_y = y[~(feature < value)]
+            sse = np.sum((left_y.mean() - left_y)**2) + \
+                  np.sum((right_y.mean() - right_y)**2)
+
+            if (best_sse is None) or (sse[0] < best_sse):
+                best_sse = sse[0]
+                best_split = {
+                    'feature': feature.name,
+                    'SSE': best_sse,
+                    'split_point': value,
+                    'left_x': x[feature < value],
+                    'left_y': left_y,
+                    'right_x': x[~(feature < value)],
+                    'right_y': right_y,
+                }
+        return best_split
 
     @staticmethod
     def _find_split(feature, x, y):

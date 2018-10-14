@@ -8,6 +8,10 @@ class TestDecisionTree(unittest.TestCase):
     # Next Steps
     # - don't keep y as dataframe (or find efficient conversion)
     # - Write GBM that can use the trees to make more powerful predictions
+    # - Root should be lvl 0, not one, comparing to sklearn
+    #
+    # - Note: SKlearn uses <= as splitting criteria, which means split point is
+    # the clostest smaller value...
 
     @classmethod
     def setUpClass(self):
