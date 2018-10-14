@@ -8,9 +8,15 @@ class TestDecisionTree(unittest.TestCase):
     # Next Steps
     # - Write GBM that can use the trees to make more powerful predictions
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(self):
         iris = load_iris()
         self.df = pd.DataFrame(iris.data, columns=iris.feature_names)
+
+        self.y = pd.DataFrame(self.df['sepal width (cm)'])
+        self.x = pd.DataFrame(self.df.drop('sepal width (cm)', axis=1))
+        self.tree = DecisionTree(5, 5)
+        self.tree.build_tree(self.x, self.y)
 
     def test_can_import(self):
         tree = DecisionTree()
@@ -28,32 +34,17 @@ class TestDecisionTree(unittest.TestCase):
         self.assertEqual(result, 3.5)
 
     def test_can_build_tree_using_multiple_continuous_features(self):
-        y = pd.DataFrame(self.df['sepal width (cm)'])
-        x = pd.DataFrame(self.df.drop('sepal width (cm)', axis=1))
-        tree = DecisionTree()
-        tree.build_tree(x, y)
-
-        self.assertTrue(type(tree._tree) is dict)
-        self.assertIn('depth', tree._tree)
+        self.assertTrue(type(self.tree._tree) is dict)
+        self.assertIn('depth', self.tree._tree)
 
     def test_prediction_using_multiple_features(self):
-        y = pd.DataFrame(self.df['sepal width (cm)'])
-        x = pd.DataFrame(self.df.drop('sepal width (cm)', axis=1))
-        tree = DecisionTree(5, 5)
-        tree.build_tree(x, y)
-
-        row = x.iloc[0]
-        result = tree.predict(row)
+        row = self.x.iloc[0]
+        result = self.tree.predict(row)
         self.assertEqual(result, 3.60625)
 
     def test_can_predict_for_df(self):
-        y = pd.DataFrame(self.df['sepal width (cm)'])
-        x = pd.DataFrame(self.df.drop('sepal width (cm)', axis=1))
-        tree = DecisionTree(5, 5)
-        tree.build_tree(x, y)
-
-        rows = x.iloc[0:10]
-        result = tree.predict(rows)
+        rows = self.x.iloc[0:10]
+        result = self.tree.predict(rows)
         self.assertTrue(len(result) == 10)
 
     @unittest.skip
