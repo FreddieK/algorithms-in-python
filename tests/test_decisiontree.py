@@ -5,9 +5,6 @@ from sklearn.datasets import load_iris
 
 
 class TestDecisionTree(unittest.TestCase):
-    # Next Steps
-    # - don't keep y as dataframe (or find efficient conversion)
-    # - Write GBM that can use the trees to make more powerful predictions
 
     @classmethod
     def setUpClass(self):
@@ -54,7 +51,3 @@ class TestDecisionTree(unittest.TestCase):
         y_pred = self.tree.predict(rows)
         result = self.tree.score(y, y_pred)
         self.assertEqual(result, 0.16790909090909079)
-
-    @unittest.skip
-    def test_can_use_categorical_features(self):
-        self.fail()

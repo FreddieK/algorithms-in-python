@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+
 class DecisionTree:
     def __init__(self, max_depth=3, min_samples=5):
         self.max_depth = max_depth
