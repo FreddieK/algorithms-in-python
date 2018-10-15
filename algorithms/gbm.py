@@ -1,4 +1,4 @@
-from decisiontree.decisiontree import DecisionTree
+from algorithms.decisiontree import DecisionTree
 import numpy as np
 import pandas as pd
 

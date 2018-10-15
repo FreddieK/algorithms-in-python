@@ -1,5 +1,5 @@
 import unittest
-from decisiontree.gbm import GBM
+from algorithms.gbm import GBM
 from sklearn.datasets import load_boston
 import pandas as pd
 import numpy as np
