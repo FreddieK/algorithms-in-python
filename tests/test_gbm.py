@@ -4,6 +4,7 @@ from sklearn.datasets import load_boston
 import pandas as pd
 import numpy as np
 
+
 class TestGBM(unittest.TestCase):
 
     @classmethod
@@ -28,5 +29,7 @@ class TestGBM(unittest.TestCase):
                                           3.0035297382705246])
 
     def test_can_predict_with_model(self):
-        breakpoint()
-        x_pred = self.X_df[]
+        y = self.y
+        y_pred = self.model.predict(self.X_df)
+        mae = np.sum(abs(y - y_pred)) / len(y)
+        self.assertEqual(self.model.mae[-1], mae)
