@@ -1,5 +1,5 @@
 import unittest
-from algorithms.countinversions import merge_sort
+from algorithms.countinversions import merge_sort, count_inversions
 
 
 class TestCountInversions(unittest.TestCase):
@@ -21,9 +21,18 @@ class TestCountInversions(unittest.TestCase):
         longer_sort = sorted(self.data[0:15])
         self.assertEqual(merge_sort(self.data[0:15]), longer_sort)
 
-    @unittest.skip
     def test_simple_count_inversions(self):
-        self.assertEqual(count_inversions([1]), 0)
-        self.assertEqual(count_inversions([1, 5, 4]), 1)
+        _, inversions = count_inversions([1, 2, 3, 4, 5, 6])
+        self.assertEqual(inversions, 0)
 
-        #self.assertEqual(count_inversions([1, 5, 4, 3]), 3)
+        _, inversions = count_inversions([2, 3, 4, 5, 6, 1])
+        self.assertEqual(inversions, 5)
+
+        _, inversions = count_inversions([1, 3, 5, 2, 4, 6])
+        self.assertEqual(inversions, 3)
+
+        _, inversions = count_inversions([6, 2, 3, 4, 5, 1])
+        self.assertEqual(inversions, 9)
+
+        _, inversions = count_inversions(self.data)
+        self.assertEqual(inversions, 2407905288)

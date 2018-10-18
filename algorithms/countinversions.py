@@ -37,22 +37,40 @@ def merge_sort(list):
     return sorted_list
 
 
-def _count_split_inversions():
-    pass
+def count_inversions(list):
+    # Augmenting the merge sort with also counting the number of inversions
+    # needed to sort array
 
+    length = len(list)
 
-def count_inversions(array):
-    # O(n log(n)) algorithm for counting array inversions
-    # https://lagunita.stanford.edu/courses/course-v1:Engineering+Algorithms1+SelfPaced/info
-
-    length = len(array)
-
-    if length == 1:
-        return 0
+    if length <= 1:
+        return list, 0
 
     split_point = math.ceil(length / 2)
-    x = count_inversions(array[:split_point])
-    y = count_inversions(array[split_point:])
-    z = _count_split_inversions(array)
+    x, x_inversions = count_inversions(list[:split_point])
+    y, y_inversions = count_inversions(list[split_point:])
 
-    return x+y+z
+    inversions = x_inversions + y_inversions
+
+    i = 0
+    j = 0
+    sorted_list = []
+
+    for k in range(length):
+        try:
+            if x[i] < y[j]:
+                sorted_list.append(x[i])
+                i += 1
+            else:
+                sorted_list.append(y[j])
+                j += 1
+                inversions += len(x) - i
+        except IndexError:
+            if len(x) <= i:
+                sorted_list.append(y[j])
+                j += 1
+            elif len(y) <= j:
+                sorted_list.append(x[i])
+                i += 1
+
+    return sorted_list, inversions
