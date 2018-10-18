@@ -1,18 +1,18 @@
 import math
 
 
-def merge_sort(list):
+def merge_sort(list_):
     # Basic implementation of merge sort algorithm, in preparation for
     # implementing the count-array-inversions algorithm
 
-    length = len(list)
+    length = len(list_)
 
     if length <= 1:
-        return list
+        return list_
 
     split_point = math.ceil(length / 2)
-    x = merge_sort(list[:split_point])
-    y = merge_sort(list[split_point:])
+    x = merge_sort(list_[:split_point])
+    y = merge_sort(list_[split_point:])
 
     i = 0
     j = 0
@@ -37,18 +37,18 @@ def merge_sort(list):
     return sorted_list
 
 
-def count_inversions(list):
+def count_inversions(list_):
     # Augmenting the merge sort with also counting the number of inversions
     # needed to sort array
 
-    length = len(list)
+    length = len(list_)
 
     if length <= 1:
-        return list, 0
+        return list_, 0
 
     split_point = math.ceil(length / 2)
-    x, x_inversions = count_inversions(list[:split_point])
-    y, y_inversions = count_inversions(list[split_point:])
+    x, x_inversions = count_inversions(list_[:split_point])
+    y, y_inversions = count_inversions(list_[split_point:])
 
     inversions = x_inversions + y_inversions
 
