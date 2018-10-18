@@ -1,9 +1,10 @@
 Package for various machine learning algorithms, implemented for learning purposes.
 
-### Algorithms so far
+### Algorithms
 - Regression Decision Tree (CART)
 - Gradient Boosting Machine
 - Random Forest
+- MergeSort (including CountArrayInversions)
 
 ## Tests
 ```bash
