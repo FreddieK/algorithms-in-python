@@ -5,6 +5,7 @@ Package for various machine learning algorithms, implemented for learning purpos
 - Gradient Boosting Machine
 - Random Forest
 - MergeSort (including CountArrayInversions)
+- QuickSort
 
 ## Tests
 ```bash
