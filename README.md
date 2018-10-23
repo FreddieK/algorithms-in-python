@@ -1,4 +1,4 @@
-Package for various machine learning algorithms, implemented for learning purposes.
+Package for various algorithms, implemented for learning purposes.
 
 ### Algorithms
 - Regression Decision Tree (CART)
