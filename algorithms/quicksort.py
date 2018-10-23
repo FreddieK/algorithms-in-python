@@ -4,10 +4,9 @@ import statistics
 
 class QuickSort:
 
-    def __init__(self, pivot_strategy='first', verbose=False):
+    def __init__(self, pivot_strategy='first'):
         self.comparisons = 0
         self.pivot_strategy = pivot_strategy
-        self.verbose = verbose
 
     def sort(self, list_):
         left = 0
@@ -33,20 +32,11 @@ class QuickSort:
         if self.pivot_strategy == 'last':
             list_[l], list_[r-1] = list_[r-1], list_[l]
         elif self.pivot_strategy == 'median':
-            m = math.floor(((len(list_[l:r]) - 1) / 2))
+            m = math.floor((l+r-1)/2)
             median_list = [list_[l], list_[m], list_[r-1]]
             median_pivot = statistics.median(median_list)
             median_index = list_.index(median_pivot)
             list_[l], list_[median_index] = list_[median_index], list_[l]
-            if self.verbose:
-                #print(list_)
-                # print('m', m)
-                print('median list', median_list)
-                # print('l', l)
-                print('median pivot', median_pivot)
-                # print('median index', median_index)
-                # print(list_[l])
-                # print(list_[median_index])
         return list_[l]
 
     @staticmethod

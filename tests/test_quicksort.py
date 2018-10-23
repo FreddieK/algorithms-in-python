@@ -37,7 +37,7 @@ class TestQuickSort(unittest.TestCase):
         self.assertEqual(pivot_point, 4)
 
     def test_median_as_pivot_simple_sort(self):
-        qs = QuickSort(pivot_strategy='median', verbose=True)
+        qs = QuickSort(pivot_strategy='median')
         list_ = list(range(0, 10))
         list_.reverse()
         qs.sort(list_)
@@ -80,4 +80,4 @@ class TestQuickSort(unittest.TestCase):
         data = stanford.read_file(filename)
         qs = QuickSort(pivot_strategy='median')
         qs.sort(data)
-        self.assertEqual(qs.comparisons, 159894)
+        self.assertEqual(qs.comparisons, 138382)
