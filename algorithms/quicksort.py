@@ -1,29 +1,60 @@
-class QuickSort:
-    pivot_strategy = None
+import math
+import statistics
 
-    def __init__(self, pivot_strategy='first'):
+
+class QuickSort:
+
+    def __init__(self, pivot_strategy='first', verbose=False):
+        self.comparisons = 0
         self.pivot_strategy = pivot_strategy
+        self.verbose = verbose
 
     def sort(self, list_):
-        length = len(list_)
+        left = 0
+        right = len(list_)
+        self._sort(list_, left, right)
 
-        if length == 1:
-            return list_
+    def _sort(self, list_, l, r):
+        length = len(list_[l:r])
+        if length <= 1:
+            return
+        self.comparisons += length - 1
 
-        pivot_point = self.choose_pivot(list_)
+        pivot_point = self._find_pivot(list_, l, r)
 
-        for item in list_:
-            # run through list and sort items smaller than pivot to the left,
-            # and larger to the right
+        self._partition(list_, l, r)
+        pivot_position = list_.index(pivot_point)
 
-        # in the end, put pivot point at the end of the left part
+        self._sort(list_, l, pivot_position)
+        self._sort(list_, pivot_position+1, r)
 
-        # recursively call function again with left and right partitions
-        # if length == 1, just return list...
+    def _find_pivot(self, list_, l, r):
+        # 'first' is the implicit default case
+        if self.pivot_strategy == 'last':
+            list_[l], list_[r-1] = list_[r-1], list_[l]
+        elif self.pivot_strategy == 'median':
+            m = math.floor(((len(list_[l:r]) - 1) / 2))
+            median_list = [list_[l], list_[m], list_[r-1]]
+            median_pivot = statistics.median(median_list)
+            median_index = list_.index(median_pivot)
+            list_[l], list_[median_index] = list_[median_index], list_[l]
+            if self.verbose:
+                #print(list_)
+                # print('m', m)
+                print('median list', median_list)
+                # print('l', l)
+                print('median pivot', median_pivot)
+                # print('median index', median_index)
+                # print(list_[l])
+                # print(list_[median_index])
+        return list_[l]
 
-
-    def _choose_pivot(self, list_):
-        # choose pivot point (pluggable selection mechanism)
-
-        if self.pivot_strategy == 'first':
-            return list_[0]
+    @staticmethod
+    def _partition(list_, l, r):
+        p = list_[l]
+        i = l + 1
+        for j in list(range(l+1, r)):
+            if list_[j] < p:
+                list_[j], list_[i] = list_[i], list_[j]
+                i += 1
+        list_[l], list_[i-1] = list_[i-1], list_[l]
