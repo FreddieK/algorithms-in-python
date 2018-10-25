@@ -6,6 +6,7 @@ Package for various algorithms, implemented for learning purposes.
 - Random Forest
 - MergeSort (including CountArrayInversions)
 - QuickSort
+- Random Contraction (for Graphs)
 
 ## Tests
 ```bash
