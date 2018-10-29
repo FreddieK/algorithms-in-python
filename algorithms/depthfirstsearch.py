@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 class DepthFirstSearch:
     _current_leader = None
     _iteration = None
@@ -8,12 +9,12 @@ class DepthFirstSearch:
         self.edges = edges
         self.vertices = list(set([x for sublist in edges for x in sublist]))
         self.current_label = len(self.vertices)
-        self.explored = []
+        self.explored = set()
         self.finishing_order = {}
         self.vertix_groups = {}
 
     def _dfs(self, vertix, reverse=False):
-        self.explored.append(vertix)
+        self.explored.add(vertix)
         tail, head = 0, 1
         if reverse:
             tail, head = head, tail
@@ -28,12 +29,14 @@ class DepthFirstSearch:
         elif self._iteration == 'second':
             self.vertix_groups[vertix] = self._current_leader
 
+        print(len(self.explored)/len(self.vertices))
+
     def first_pass(self):
         self._iteration = 'first'
         self.current_label = len(self.vertices)
         vertices = self.vertices
 
-        self.explored = []
+        self.explored = set()
         for vertix in vertices:
             print(f'Continuing for vertix {vertix}')
             print(f'Explored: {self.explored}')
@@ -46,7 +49,7 @@ class DepthFirstSearch:
         run_order = sorted(self.finishing_order.items(), key=lambda x: x[1])
         vertices = [x[0] for x in run_order]
 
-        self.explored = []
+        self.explored = set()
         for vertix in vertices:
             print(f'Continuing for vertix {vertix}')
             if vertix not in self.explored:
