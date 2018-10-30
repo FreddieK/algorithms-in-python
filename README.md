@@ -7,8 +7,9 @@ Package for various algorithms, implemented for learning purposes.
 - MergeSort (including CountArrayInversions)
 - QuickSort
 - Random Contraction (for Graphs)
+- Depth First Search (including calculating Strongly Connected Components)
 
 ## Tests
 ```bash
-python -m unittest
+python -m unittest tests/[filename.py]
 ```
