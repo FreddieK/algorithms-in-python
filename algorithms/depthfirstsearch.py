@@ -31,7 +31,6 @@ class DepthFirstSearch:
         for child in children:
             if child not in self.explored:
                 self._dfs(child, reverse)
-
         if self._iteration == 'first':
             self.finishing_order[vertex] = self.current_label
             self.current_label -= 1
@@ -39,25 +38,19 @@ class DepthFirstSearch:
             self.vertex_groups[vertex] = self._current_leader
 
     def _dfs(self, starting_vertex, adjacency_list):
-
         stack = [starting_vertex]
         while len(stack) > 0:
             vertex = stack.pop()
-
             self.explored.add(vertex)
-
             if vertex in adjacency_list.keys():
-                children = adjacency_list[vertex]
-                children = [child for child in children if
+                children = [child for child in adjacency_list[vertex] if
                             child not in self.explored]
             else:
                 children = []
-
             if len(children) > 0:
                 stack.append(vertex)
                 for child in children:
-                    if child not in self.explored:
-                        stack.append(child)
+                    stack.append(child)
             else:
                 if self._iteration == 'first':
                     self.finishing_order[vertex] = self.current_label

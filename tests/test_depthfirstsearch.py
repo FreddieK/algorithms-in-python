@@ -75,7 +75,10 @@ class TestDepthFirstSearch(unittest.TestCase):
         scc = graph.get_scc_sizes()
         self.assertEqual(scc.tolist(), [4, 3])
 
+    @unittest.skip
     def test_with_stanford_data(self):
+        # Data not included in repo
+
         filename = 'SCC.txt'
         edges = stanford.read_graph_file(filename, ' ')
         graph = DepthFirstSearch(edges)
@@ -96,14 +99,13 @@ class TestDepthFirstSearch(unittest.TestCase):
 
 def troubleshoot_performance_behaviour(self):
     # Helper to identify where the algorithm exploded in complexity
+
     from algorithms.depthfirstsearch import DepthFirstSearch
     from helpers import stanford
     import cProfile
     filename = 'SCC.txt'
     edges = stanford.read_graph_file(filename, ' ')
-
-    edges_subset = edges[0:100000]
-
+    edges_subset = edges[0:500000]
     graph = DepthFirstSearch(edges_subset)
 
     cProfile.run("graph.first_pass()")
