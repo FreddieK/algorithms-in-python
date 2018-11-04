@@ -22,14 +22,10 @@ def read_weighted_graph_file(filename, split='\t'):
 
     def to_tuple(x):
         split = str.split(x, ',')
-        if len(split) == 1:  # Initial vertex index
-            return int(split[0])
-        elif len(split) == 2:
-            return int(split[0]), int(split[1])
+        return int(split[0]), int(split[1])
 
-    cleaned_vertices = []
+    cleaned_vertices = dict()
     for vertex in vertices:
-        # Skip last index to remove newline character
-        cleaned_vertices.append([to_tuple(x) for x in vertex[:-1]])
-
+        # Skip first last index to remove index vertex and newline character
+        cleaned_vertices[int(vertex[0])] = [to_tuple(x) for x in vertex[1:-1]]
     return cleaned_vertices
