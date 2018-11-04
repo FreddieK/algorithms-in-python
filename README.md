@@ -13,3 +13,4 @@ Package for various algorithms, implemented for learning purposes.
 ```bash
 python -m unittest tests/[filename.py]
 ```
+
