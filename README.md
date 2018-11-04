@@ -8,6 +8,7 @@ Package for various algorithms, implemented for learning purposes.
 - QuickSort
 - Random Contraction (for Graphs)
 - Depth First Search (including calculating Strongly Connected Components)
+- Dijkstra's Shortest Path
 
 ## Tests
 ```bash
