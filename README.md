@@ -14,6 +14,9 @@ Package for various algorithms, implemented for learning purposes.
 - 2Sum
 - Heaps and Median Maintenance
 
+#### Stanford Algorithms Part 2
+- Scheduling
+
 ## Tests
 ```bash
 python -m unittest tests/[filename.py]
