@@ -1,3 +1,6 @@
+import operator
+
+
 def read_file(filename='jobs.txt'):
     """
     :param filename: Optional parameter if filename would be changed
@@ -12,8 +15,6 @@ def read_file(filename='jobs.txt'):
     list_ = [[int(item) for item in line.split()] for line in lines[1:-1]]
 
     return length, list_
-
-import operator
 
 
 class Scheduling:
