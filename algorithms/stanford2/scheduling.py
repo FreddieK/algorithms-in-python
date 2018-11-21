@@ -28,13 +28,23 @@ class Scheduling:
     schedule.
     """
 
-    def __init__(self, list_):
+    def __init__(self, list_, schedule_by_ratio=False):
         self.jobs = list_
         self.sorted_jobs = None
         self.completion_times = None
+        self.schedule_by_ratio = schedule_by_ratio
 
     def _schedule(self):
         weighted_list = [[x[0], x[1], x[0] - x[1]] for x in self.jobs]
+        self.sorted_jobs = sorted(weighted_list, key=operator.itemgetter(2, 0),
+                                  reverse=True)
+
+    def _schedule_by_ratio(self):
+        """
+        Your task now is to run the greedy algorithm that schedules jobs
+        (optimally) in decreasing order of the ratio (weight/length).
+        """
+        weighted_list = [[x[0], x[1], x[0]/x[1]] for x in self.jobs]
         self.sorted_jobs = sorted(weighted_list, key=operator.itemgetter(2, 0),
                                   reverse=True)
 
@@ -44,7 +54,10 @@ class Scheduling:
         return [[x[0], x[1]] for x in self.sorted_jobs]
 
     def run_jobs(self):
-        self._schedule()
+        if self.schedule_by_ratio:
+            self._schedule_by_ratio()
+        else:
+            self._schedule()
         global_completion_time = 0
         completion_times = []
 

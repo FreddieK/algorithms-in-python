@@ -64,3 +64,35 @@ class TestScheduling(unittest.TestCase):
         jobs.run_jobs()
         total_completion_time = jobs.get_weighted_completion_time()
         print(total_completion_time)
+
+    def test_schedules_according_to_weighted_priority_by_ratio(self):
+        list_ = [
+            [5, 5],
+            [3, 1],
+            [10, 5]
+        ]
+        jobs = Scheduling(list_)
+        jobs._schedule_by_ratio()
+        run_order = jobs.get_run_order()
+        self.assertEqual(run_order, [[3, 1],
+                                     [10, 5],
+                                     [5, 5]])
+
+    def test_running_jobs_by_ratio(self):
+        list_ = [
+            [5, 5],
+            [3, 1],
+            [10, 5]
+        ]
+        jobs = Scheduling(list_, schedule_by_ratio=True)
+        jobs.run_jobs()
+        weighted_completion_time = jobs.get_weighted_completion_time()
+        self.assertEqual(weighted_completion_time, 3*1 + 10*6 + 5*11)
+
+    @unittest.skip
+    def test_with_full_data(self):
+        length, list_ = read_file()
+        jobs = Scheduling(list_, schedule_by_ratio=True)
+        jobs.run_jobs()
+        total_completion_time = jobs.get_weighted_completion_time()
+        print(total_completion_time)
