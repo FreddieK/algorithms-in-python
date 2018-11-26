@@ -16,6 +16,7 @@ Package for various algorithms, implemented for learning purposes.
 
 #### Stanford Algorithms Part 2
 - Scheduling
+- Prims Minimum Spanning Tree
 
 ## Tests
 ```bash
