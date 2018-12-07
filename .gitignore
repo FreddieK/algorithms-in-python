@@ -1,3 +1,4 @@
 **/__pycache__
 data/SCC.txt
 .idea
+.pytest_cache/

@@ -17,8 +17,14 @@ Package for various algorithms, implemented for learning purposes.
 #### Stanford Algorithms Part 2
 - Scheduling
 - Prims Minimum Spanning Tree
+- Single Link Clustering
 
 ## Tests
 ```bash
 python -m unittest tests/[filename.py]
+```
+
+Switching to using Pytest, remains to be seen how these will play together
+```
+python -m pytest tests/stanford2/test_singlelinkclustering.py
 ```
