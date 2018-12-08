@@ -1,5 +1,6 @@
 from operator import itemgetter
 
+
 def read_file(filename='clustering1.txt'):
     """
     :return: Number of nodes, list of all edges
