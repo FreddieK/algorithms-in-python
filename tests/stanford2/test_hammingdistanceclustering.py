@@ -1,6 +1,7 @@
 from algorithms.stanford2.hammingdistanceclustering import *
 import pytest
 
+
 def test_reads_file_correctly():
     nodes, num_nodes, num_bits = read_file()
 
@@ -16,7 +17,7 @@ def test_clustering():
         [1, 1, 1]
     ]
     nodes = np.array(nodes)
-    clusters = cluster_nodes_v2(nodes, 1)
+    clusters = cluster_nodes(nodes, 1)
 
     assert len(clusters) == 1
 
@@ -28,7 +29,7 @@ def test_clustering():
         [1, 1, 0, 1]
     ]
     nodes = np.array(nodes)
-    clusters = cluster_nodes_v2(nodes, 1)
+    clusters = cluster_nodes(nodes, 1)
 
     assert len(clusters) == 2
 
@@ -41,7 +42,7 @@ def test_clustering():
         [1, 0, 1, 0, 1],
     ]
     nodes = np.array(nodes)
-    clusters = cluster_nodes_v2(nodes, 2)
+    clusters = cluster_nodes(nodes, 2)
 
     assert len(clusters) == 1
 
@@ -49,5 +50,5 @@ def test_clustering():
 @pytest.mark.skip(reason="No actual test")
 def test_with_stanford_data():
     nodes, num_nodes, num_bits = read_file()
-    clusters = cluster_nodes_v2(nodes, 2)
+    clusters = cluster_nodes(nodes, 2)
     len(clusters)

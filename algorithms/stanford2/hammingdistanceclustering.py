@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 
 
 def read_file(filename='clustering_big.txt'):
@@ -14,24 +13,6 @@ def read_file(filename='clustering_big.txt'):
 
 
 def cluster_nodes(nodes, max_distance=2):
-    clusters = []
-
-    for index, node in enumerate(nodes):
-
-        node_distances = nodes - node
-        node_distances = np.sum(node_distances.__abs__(), axis=1)
-        index_in_cluster = (node_distances <= max_distance)
-
-        nodes_in_cluster = nodes[index_in_cluster]
-        clusters.append(nodes_in_cluster) if len(nodes_in_cluster) > 0 else None
-        nodes = nodes[~index_in_cluster]
-
-        if index % 1000 == 0:
-            print(index, len(clusters), len(nodes))
-    return clusters
-
-
-def cluster_nodes_v2(nodes, max_distance=2):
     clusters = {}
 
     nodes_to_explore_in_cluster = []
