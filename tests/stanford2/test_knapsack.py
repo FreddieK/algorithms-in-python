@@ -26,7 +26,7 @@ def test_stanford_data():
     A = knapsack(num_items, sack_size, items)
     print(f'Max value is {A.max()}')
 
-
+@pytest.mark.skip(reason="No actual test")
 def test_stanford_part2():
     items, sack_size, num_items = read_file('knapsack_big.txt')
     A = knapsack(num_items, sack_size, items)
