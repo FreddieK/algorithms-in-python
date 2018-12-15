@@ -20,15 +20,15 @@ def test_can_recursively_solve_smaller_problem():
     assert A.shape == (5, 7)
 
 
-@pytest.mark.skip(reason="No actual test")
+#@pytest.mark.skip(reason="No actual test")
 def test_stanford_data():
     items, sack_size, num_items = read_file()
     A = knapsack(num_items, sack_size, items)
     print(f'Max value is {A.max()}')
+
 
 @pytest.mark.skip(reason="No actual test")
 def test_stanford_part2():
     items, sack_size, num_items = read_file('knapsack_big.txt')
     A = knapsack(num_items, sack_size, items)
     print(f'Max value is {A.max()}')
-    breakpoint()
