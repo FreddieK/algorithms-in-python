@@ -1,9 +1,6 @@
 from algorithms.stanford2.knapsack import *
 import pytest
 
-# Do first part in python
-# Test cythonizing it for second part
-
 
 def test_reads_file_correctly():
     items, sack_size, num_items = read_file()

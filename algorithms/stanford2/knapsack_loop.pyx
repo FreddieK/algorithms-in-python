@@ -1,4 +1,7 @@
 # cython: language_level=3
+# cython: infer_types=True
+
+
 def calculate_optimal_solution(A, W, items, n):
     for i in range(1, n + 1):
         if i % 50 == 0:
